@@ -121,57 +121,12 @@
   </div>
 
   <!-- team section -->
+ 
+    <h3>Site Locations</h3>
+    <div id="map"></div>
 
-  <!-- <section class="team_section layout_padding">
-    <div class="container">
-      <div class="heading_container heading_center">
-        <h2>
-          Our Team
-        </h2>
-        <p>
-          Our mission is to provide innovative and costeffective energy solutions that help create a better and more sustainable future.
-        </p>
-      </div>
-      <div class="row">
-        <div class="col-md-4 col-sm-6 mx-auto">
-          <div class="box">
-            <div class="img-box">
-              <img src="images/founder.jpg" alt="">
-            </div>
-            <div class="detail-box">
-              <h5>
-                DATTATTRAY DANDGAVHAL
-              </h5>
-              <h6 class="">
-                FOUNDER & CHAIRMAN
-              </h6>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6 mx-auto">
-          <div class="box">
-            <div class="img-box">
-              <img src="images/cofounder.jpg" alt="">
-            </div>
-            <div class="detail-box">
-              <h5>
-                KHUSHAL DANDGAVHAL
-              </h5>
-              <h6 class="">
-                CO-FOUNDER & CEO
-              </h6>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section> -->
-  <div class="col-lg-6 pe-lg-0" style="min-height: 400px;">
-    <div class="position-relative h-100">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3749.1093372857495!2d73.7475138!3d20.0039253!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bddebcbe1f0ee75%3A0x4c8551eea0def9eb!2sFlyLab%20Solutions%20Private%20Limited!5e0!3m2!1sen!2sin!4v1736242521439!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3724.042785528254!2d75.11411707525662!3d21.03097398061895!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjHCsDAxJzUxLjUiTiA3NcKwMDcnMDAuMSJF!5e0!3m2!1sen!2sin!4v1736246714705!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-</div>
+
+
   <!-- end team section -->
 
   <!-- info section -->
@@ -324,6 +279,69 @@
   <script src="js/custom.js"></script>
   <!-- Google Map -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
+
+  
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+      // Initialize the map and set it to an initial position
+      var map = L.map('map').setView([20.9183, 75.0146], 9); // Initial center
+
+      // Add the OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      // Define a red marker icon with a working URL
+      var redIcon = L.icon({
+          iconUrl: 'images/marker.png',
+          iconSize: [90, 40],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34]
+      });
+
+      // Array of locations with latitude, longitude, and name
+      var locations = [
+          {lat: 20.8256, lon: 75.2896, name: "Kasoda 25MW"},
+          {lat: 21.0309, lon: 75.1167, name: "Amalner 25MW"},
+          {lat: 20.9183, lon: 75.0146, name: "Parola 100MW"},
+          {lat: 20.8426, lon: 75.9445, name: "Bodwad 25MW"},
+          {lat: 20.9266, lon: 74.9392, name: "180 MW"}
+      ];
+
+      // Create an array to hold all marker coordinates
+      var bounds = [];
+
+      // Add a marker for each location
+      locations.forEach(function(location) {
+          var marker = L.marker([location.lat, location.lon], {icon: redIcon})
+              .addTo(map)
+              .bindPopup(`<b>${location.name}</b>`);
+
+          // Add the name of the location as a custom icon next to the marker
+          var nameIcon = L.divIcon({
+              className: 'marker-name',
+              html: `<b>${location.name}</b>`,
+              iconSize: [100, 30],
+              iconAnchor: [50, 15] // position the name beside the marker
+          });
+
+          // Create another marker for the name next to the location
+          L.marker([location.lat, location.lon], {icon: nameIcon})
+              .addTo(map);
+
+          // Add this location to bounds for map adjustment
+          bounds.push([location.lat, location.lon]);
+
+          // Zoom to the clicked marker's location
+          marker.on('click', function() {
+              map.setView([location.lat, location.lon], 12); // Zoom in when clicked
+          });
+      });
+
+      // Adjust the map to fit all markers
+      map.fitBounds(bounds);
+  </script>
   <!-- End Google Map -->
 </body>
 
