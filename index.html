@@ -30,6 +30,27 @@
   <link href="css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+      #map {
+          height: 600px;
+          width: 100%;
+      }
+      h3 {
+          text-align: center;
+          margin-top: 20px;
+          font-size: 24px;
+      }
+      /* Style for the name next to the marker */
+      .marker-name {
+          background-color: rgba(255, 255, 255, 0.7);
+          padding: 5px;
+          border-radius: 3px;
+          color: black;
+          font-size: 14px;
+      }
+  </style>
 </head>
 
 <body>
@@ -402,65 +423,73 @@
     </div>
   </section> -->
 
-  <div id="map"></div>
+  <h3>Site Locations</h3>
+    <div id="map"></div>
 
-    <!-- Google Maps API -->
-    <script async 
-        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-    </script>
+    
+    
+         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+      // Initialize the map and set it to an initial position
+      var map = L.map('map').setView([20.9183, 75.0146], 9); // Initial center
 
-    <script>
-        function initMap() {
-            // Create the map, centered on a default location
-            const map = new google.maps.Map(document.getElementById("map"), {
-                center: { lat: 20.5937, lng: 78.9629 }, // Center of India
-                zoom: 5, // Zoom level for the map
-            });
+      // Add the OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
 
-            // Define the locations to be added as markers
-            const locations = [
-                {
-                    lat: 20.0039253,
-                    lng: 73.7475138,
-                    name: "FlyLab Solutions Private Limited",
-                },
-                {
-                    lat: 21.0309739,
-                    lng: 75.1141170,
-                    name: "Location 2 - Business Site",
-                },
-                {
-                    lat: 19.0760,
-                    lng: 72.8777,
-                    name: "Mumbai Business Site",
-                },
-                {
-                    lat: 22.5726,
-                    lng: 88.3639,
-                    name: "Kolkata Business Site",
-                },
-            ];
+      // Define a red marker icon with a working URL
+      var redIcon = L.icon({
+          iconUrl: 'images/marker.png',
+          iconSize: [90, 40],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34]
+      });
 
-            // Add a marker for each location
-            locations.forEach((location) => {
-                const marker = new google.maps.Marker({
-                    position: { lat: location.lat, lng: location.lng },
-                    map: map,
-                    title: location.name,
-                });
+      // Array of locations with latitude, longitude, and name
+      var locations = [
+          {lat: 20.8256, lon: 75.2896, name: "Kasoda 25MW"},
+          {lat: 21.0309, lon: 75.1167, name: "Amalner 25MW"},
+          {lat: 20.9183, lon: 75.0146, name: "Parola 100MW"},
+          {lat: 20.8426, lon: 75.9445, name: "Bodwad 25MW"},
+          {lat: 20.9266, lon: 74.9392, name: "180 MW"}
+      ];
 
-                // Add an info window to display location details
-                const infoWindow = new google.maps.InfoWindow({
-                    content: `<div><strong>${location.name}</strong></div>`,
-                });
+      // Create an array to hold all marker coordinates
+      var bounds = [];
 
-                // Open info window on marker click
-                marker.addListener("click", () => {
-                    infoWindow.open(map, marker);
-                });
-            });
-        }
-    </script>
+      // Add a marker for each location
+      locations.forEach(function(location) {
+          var marker = L.marker([location.lat, location.lon], {icon: redIcon})
+              .addTo(map)
+              .bindPopup(`<b>${location.name}</b>`);
+
+          // Add the name of the location as a custom icon next to the marker
+          var nameIcon = L.divIcon({
+              className: 'marker-name',
+              html: `<b>${location.name}</b>`,
+              iconSize: [100, 30],
+              iconAnchor: [50, 15] // position the name beside the marker
+          });
+
+          // Create another marker for the name next to the location
+          L.marker([location.lat, location.lon], {icon: nameIcon})
+              .addTo(map);
+
+          // Add this location to bounds for map adjustment
+          bounds.push([location.lat, location.lon]);
+
+          // Zoom to the clicked marker's location
+          marker.on('click', function() {
+              map.setView([location.lat, location.lon], 12); // Zoom in when clicked
+          });
+      });
+
+      // Adjust the map to fit all markers
+      map.fitBounds(bounds);
+  </script>
+   
 
 </div>
   <!-- end team section -->
