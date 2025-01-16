@@ -16,7 +16,7 @@
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-
+  
   <!-- fonts style -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <!--owl slider stylesheet -->
@@ -28,6 +28,8 @@
 
   <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet" />
+  <link rel="stylesheet"  href="css/style.scss" />
+  <link rel="stylesheet"  href="css/style.css.map" />
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
 </head>
@@ -53,7 +55,7 @@
               <i class="fa fa-phone" aria-hidden="true"></i>
               <span>Call : +91 97647 39002</span>
           </a>
-            <a href="mailto:tdinfraenergy@gmail.com">
+            <a href="mailto:swamigreensolar01@gmail.com">
               <i class="fa fa-envelope" aria-hidden="true"></i>
               <span>
                 swamigreensolar01@gmail.com 
@@ -94,10 +96,10 @@
                   <a class="nav-link" href="about.html"> About</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="service.html">Services</a>
+                  <a class="nav-link" href="sites.html">Sites</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="team.html"> Team </a>
+                  <a class="nav-link" href="service.html">Services </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="contact.html">Contact Us</a>
@@ -355,115 +357,17 @@
 
   <!-- about section ends -->
 
-  <!-- team section -->
+  <!-- site section -->
 
-  <!-- <section class="team_section layout_padding">
-    <div class="container">
-      <div class="heading_container heading_center">
-        <h2>
-          Our Team
-        </h2>
-        <p>
-          Our mission is to provide innovative and costeffective energy solutions that help create a better and more sustainable future.
-        </p>
-      </div>
-      <div class="row">
-        <div class="col-md-4 col-sm-6 mx-auto">
-          <div class="box">
-            <div class="img-box">
-              <img src="images/founder.jpg" alt="">
-            </div>
-            <div class="detail-box">
-              <h5>
-                DATTATTRAY DANDGAVHAL 
-              </h5>
-              <h6 class="">
-                FOUNDER & CHAIRMAN
-              </h6>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6 mx-auto">
-          <div class="box">
-            <div class="img-box">
-              <img src="images/cofounder.jpg" alt="">
-            </div>
-            <div class="detail-box">
-              <h5>
-                KHUSHAL DANDGAVHAL
-              </h5>
-              <h6 class="">
-                CO-FOUNDER & CEO
-              </h6>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section> -->
+  <section class="team_section layout_padding">
+    <h3>Site Locations</h3>
+    <div id="map"></div>
 
-  <div id="map"></div>
+  </section>
 
-    <!-- Google Maps API -->
-    <script async 
-        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-    </script>
-
-    <script>
-        function initMap() {
-            // Create the map, centered on a default location
-            const map = new google.maps.Map(document.getElementById("map"), {
-                center: { lat: 20.5937, lng: 78.9629 }, // Center of India
-                zoom: 5, // Zoom level for the map
-            });
-
-            // Define the locations to be added as markers
-            const locations = [
-                {
-                    lat: 20.0039253,
-                    lng: 73.7475138,
-                    name: "FlyLab Solutions Private Limited",
-                },
-                {
-                    lat: 21.0309739,
-                    lng: 75.1141170,
-                    name: "Location 2 - Business Site",
-                },
-                {
-                    lat: 19.0760,
-                    lng: 72.8777,
-                    name: "Mumbai Business Site",
-                },
-                {
-                    lat: 22.5726,
-                    lng: 88.3639,
-                    name: "Kolkata Business Site",
-                },
-            ];
-
-            // Add a marker for each location
-            locations.forEach((location) => {
-                const marker = new google.maps.Marker({
-                    position: { lat: location.lat, lng: location.lng },
-                    map: map,
-                    title: location.name,
-                });
-
-                // Add an info window to display location details
-                const infoWindow = new google.maps.InfoWindow({
-                    content: `<div><strong>${location.name}</strong></div>`,
-                });
-
-                // Open info window on marker click
-                marker.addListener("click", () => {
-                    infoWindow.open(map, marker);
-                });
-            });
-        }
-    </script>
-
-</div>
-  <!-- end team section -->
+  
+<!-- </div> -->
+  <!-- end site section -->
 
   <!-- contact section -->
   <section class="contact_section ">
