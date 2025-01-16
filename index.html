@@ -32,6 +32,27 @@
   <link rel="stylesheet"  href="css/style.css.map" />
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+      #map {
+          height: 600px;
+          width: 100%;
+      }
+      h3 {
+          text-align: center;
+          margin-top: 20px;
+          font-size: 24px;
+      }
+      /* Style for the name next to the marker */
+      .marker-name {
+          background-color: rgba(255, 255, 255, 0.7);
+          padding: 5px;
+          border-radius: 3px;
+          color: black;
+          font-size: 14px;
+      }
+  </style>
 </head>
 
 <body>
@@ -363,11 +384,66 @@
     <h3>Site Locations</h3>
     <div id="map"></div>
 
-  </section>
+    <!-- Google Maps API -->
+    <script async 
+        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+    </script>
 
-  
-<!-- </div> -->
-  <!-- end site section -->
+    <script>
+        function initMap() {
+            // Create the map, centered on a default location
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 20.5937, lng: 78.9629 }, // Center of India
+                zoom: 5, // Zoom level for the map
+            });
+
+            // Define the locations to be added as markers
+            const locations = [
+                {
+                    lat: 20.0039253,
+                    lng: 73.7475138,
+                    name: "FlyLab Solutions Private Limited",
+                },
+                {
+                    lat: 21.0309739,
+                    lng: 75.1141170,
+                    name: "Location 2 - Business Site",
+                },
+                {
+                    lat: 19.0760,
+                    lng: 72.8777,
+                    name: "Mumbai Business Site",
+                },
+                {
+                    lat: 22.5726,
+                    lng: 88.3639,
+                    name: "Kolkata Business Site",
+                },
+            ];
+
+            // Add a marker for each location
+            locations.forEach((location) => {
+                const marker = new google.maps.Marker({
+                    position: { lat: location.lat, lng: location.lng },
+                    map: map,
+                    title: location.name,
+                });
+
+                // Add an info window to display location details
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `<div><strong>${location.name}</strong></div>`,
+                });
+
+                // Open info window on marker click
+                marker.addListener("click", () => {
+                    infoWindow.open(map, marker);
+                });
+            });
+        }
+    </script>
+
+</div>
+  <!-- end team section -->
 
   <!-- contact section -->
   <section class="contact_section ">
